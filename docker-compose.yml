@@ -12,7 +12,7 @@ services:
         max-size: 10m
     restart: on-failure
     depends_on:
-      - maltrail
+      - filebeat
     network_mode: host
     environment:
       - TZ=UTC

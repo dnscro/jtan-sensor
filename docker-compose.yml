@@ -28,17 +28,8 @@ services:
         max-file: "5"
         max-size: 10m
     restart: on-failure
-    depends_on:
-      - redis
     network_mode: host
     environment:
       - TZ=UTC
     env_file:
       - .env
-
-  redis:
-    image: "redis:alpine3.16"
-    container_name: redis
-    restart: always
-    command: redis-server
-    network_mode: host

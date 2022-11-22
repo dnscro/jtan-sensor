@@ -47,3 +47,5 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
       - ~/.docker/config.json:/config.json
     command: --interval 3600
+    environment:
+      - WATCHTOWER_CLEANUP=true

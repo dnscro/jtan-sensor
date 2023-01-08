@@ -22,6 +22,10 @@ services:
   filebeat:
     image: index.docker.io/dnsc/jtan-filebeat
     container_name: filebeat
+    volumes:
+      - ${CA_AUTHORITY}:/certs/ca.crt
+      - ${CLIENT_CERTIFICATE}:/certs/client.crt
+      - ${CLIENT_KEY}:/certs/client.key
     logging:
       driver: "json-file"
       options:

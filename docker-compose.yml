@@ -22,10 +22,6 @@ services:
   filebeat:
     image: index.docker.io/dnsc/jtan-filebeat
     container_name: filebeat
-    volumes:
-      - ${CA_AUTHORITY}:/certs/ca.crt
-      - ${CLIENT_CERTIFICATE}:/certs/client.crt
-      - ${CLIENT_KEY}:/certs/client.key
     logging:
       driver: "json-file"
       options:
@@ -38,6 +34,35 @@ services:
     env_file:
       - .env
   
+  redis:
+    image: "redis:6.2-alpine"
+    container_name: redis
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "5"
+        max-size: 10m
+    restart: always
+    depends_on:
+      - filebeat
+    command: redis-server
+    network_mode: host
+
+  exporter:
+    image: index.docker.io/dnsc/jtan-exporter
+    container_name: exporter
+    volumes:
+      - ${CERTIFICATE}:/home/certs/cert.pem
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "5"
+        max-size: 10m
+    restart: always
+    network_mode: host
+    env_file:
+      - .env
+
   watchtower:
     image: containrrr/watchtower
     container_name: watchtower

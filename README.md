@@ -61,7 +61,7 @@ Create a copy of the .env.example file
 cp .env.example .env
 ```
 
-Fill the variables in the .env file.
+Fill the variables in the .env file based on the details in the **Component details** chapter.
 
 Run the docker-compose stack:
 ```

@@ -63,6 +63,8 @@ cp .env.example .env
 
 Fill the variables in the .env file based on the details in the **Component details** chapter.
 
+Make sure the timezone is set to UTC and the datetime is set.
+
 Run the docker-compose stack:
 ```
 docker-compose up -d

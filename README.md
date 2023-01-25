@@ -50,7 +50,6 @@ sudo apt install unzip
 unzip main.zip
 
 cd jtan-sensor-main
-
 ```
 
 Create a copy of the .env.example file

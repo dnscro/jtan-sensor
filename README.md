@@ -43,6 +43,14 @@ source <(curl -s https://get.docker.com/)
 
 Download the repository locally
 ```
+wget https://github.com/dnscro/jtan-sensor/archive/refs/heads/main.zip
+
+sudo apt install unzip
+
+unzip main.zip
+
+cd jtan-sensor-main
+
 ```
 
 Create a copy of the .env.example file

@@ -45,6 +45,10 @@ Download the repository locally
 ```
 wget https://github.com/dnscro/jtan-sensor/archive/refs/heads/main.zip
 
+sudo apt update
+
+sudo apt install docker-compose
+
 sudo apt install unzip
 
 unzip main.zip

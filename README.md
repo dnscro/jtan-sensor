@@ -10,6 +10,7 @@ The main services available are:
 - filebeat
 - redis
 - exporter
+- watchtower
 
 # Component details
 ## Maltrail
@@ -33,6 +34,11 @@ The events are sent in batches as a json payload (of maximum 100 events) to a ht
 The request are authorized using a bearer token which is placed in the headers section of each request. This token is specified in the variable ```CENTRAL_SERVER_API_KEY```. 
 
 Because the connection with the central api server is done using https we must also specify the certificate in pem format so that the requests are verified.
+
+## Watchtower
+A utility Docker image used to watch for any updates of the Docker images in the stack. This check is done every hour and if changes are detected, the new image is downloaded and the service is restarted.
+
+Since some of the used images are stored in a private repository, Watchtower must authenticate to Dockerhub.
 
 
 # Installation
@@ -60,6 +66,13 @@ Create a copy of the .env.example file
 ```
 cp .env.example .env
 ```
+
+Before starting the docker-compose stack we need to login the system to dockerhub. For this, a read-only token must be generated in the Dockerhub admin pan el. Then run the command:
+```
+docker login -u dnsc
+```
+After this, the token will be required.
+
 
 Fill the variables in the .env file based on the details in the **Component details** chapter.
 

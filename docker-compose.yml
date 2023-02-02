@@ -49,10 +49,12 @@ services:
     network_mode: host
 
   exporter:
-    image: index.docker.io/dnsc/jtan-exporter
+    # image: index.docker.io/dnsc/jtan-exporter
+    image: exporter
     container_name: exporter
     volumes:
       - ${CERTIFICATE}:/home/certs/cert.pem
+      - /sys/firmware/devicetree/base/serial-number:/home/serial
     logging:
       driver: "json-file"
       options:

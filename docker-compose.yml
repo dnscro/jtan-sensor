@@ -49,8 +49,7 @@ services:
     network_mode: host
 
   exporter:
-    # image: index.docker.io/dnsc/jtan-exporter
-    image: exporter
+    image: index.docker.io/dnsc/jtan-exporter
     container_name: exporter
     volumes:
       - ${CERTIFICATE}:/home/certs/cert.pem

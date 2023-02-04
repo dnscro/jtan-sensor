@@ -21,17 +21,19 @@ The generated events are sent via udp to the port 5000.
 ## Filebeat
 This service is used to receive events from the Maltrail service and change the format of the timestamp and update the structure of the events.
 
-After this processing, the events are sent to redis service in the ```sensor``` list on localhost:6379
+After this processing, the events are sent to redis service in the ```sensor``` list on ```localhost:6379```
 
 ## Redis
-Used to receive the events from filebeat and store them for a short time until they are sent to the central server. The events are store in a list data structure called ```sensor```.
+Used to receive the events from filebeat and store them for a short time until they are sent to the central server. The events are stored in a list data structure called ```sensor```.
 
 ## Exporter
 This is a custom service created with Python that periodically reads from the redis list ```sensor``` (based on the value set in the variable ```EXPORT_INTERVAL_IN_MINUTES```).
 
 The events are sent in batches as a json payload (of maximum 100 events) to a https endpoint specified in ```CENTRAL_SERVER_HOST``` which must also contain the protocol, the hostname, the port and the path (example: https://events.com:4443/api/ingest)
 
-The request are authorized using a bearer token which is placed in the headers section of each request. This token is specified in the variable ```CENTRAL_SERVER_API_KEY```. 
+The request are authorized using a bearer token which is placed in the headers section of each request. This token is specified in the variable ```CENTRAL_SERVER_API_KEY```.
+
+Also, in this service, the serial number of the machine is added to each event. The serial number must be specified in the variable ```SERIAL_NUMBER```.
 
 Because the connection with the central api server is done using https we must also specify the certificate in pem format so that the requests are verified.
 

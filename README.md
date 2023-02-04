@@ -45,6 +45,8 @@ Since some of the used images are stored in a private repository, Watchtower mus
 Log into the raspberry pi using ssh and install docker
 ```
 source <(curl -s https://get.docker.com/)
+
+sudo usermod -aG docker $USER
 ```
 
 Download the repository locally

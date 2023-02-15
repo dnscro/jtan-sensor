@@ -22,8 +22,7 @@ services:
       - .env
 
   maltrail-web:
-    # image: index.docker.io/dnsc/jtan-maltrail-web
-    image: web
+    image: index.docker.io/dnsc/jtan-maltrail-web
     container_name: maltrail-web
     volumes:
       - logs:/logs

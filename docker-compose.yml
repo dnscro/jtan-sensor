@@ -5,6 +5,8 @@ services:
     image: index.docker.io/dnsc/jtan-maltrail
     container_name: maltrail
     hostname: "$SENSOR_LOCATION"
+    volumes:
+      - logs:/logs
     logging:
       driver: "json-file"
       options:
@@ -13,6 +15,25 @@ services:
     restart: always
     depends_on:
       - filebeat
+    network_mode: host
+    environment:
+      - TZ=UTC
+    env_file:
+      - .env
+
+  maltrail-web:
+    image: index.docker.io/dnsc/jtan-maltrail-web
+    container_name: maltrail-web
+    volumes:
+      - logs:/logs
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "5"
+        max-size: 10m
+    restart: always
+    depends_on:
+      - maltrail
     network_mode: host
     environment:
       - TZ=UTC
@@ -78,3 +99,7 @@ services:
     command: --interval 3600
     environment:
       - WATCHTOWER_CLEANUP=true
+
+volumes:
+  logs:
+    driver: local

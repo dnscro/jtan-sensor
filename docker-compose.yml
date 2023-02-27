@@ -84,6 +84,20 @@ services:
     env_file:
       - .env
 
+  jtan-sensor-log-rotate:
+    image: index.docker.io/dnsc/jtan-sensor-log-rotate
+    container_name: jtan-sensor-log-rotate
+    volumes:
+      - logs:/logs
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "5"
+        max-size: 10m
+    restart: always
+    env_file:
+      - .env
+
   watchtower:
     image: containrrr/watchtower
     container_name: watchtower

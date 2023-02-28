@@ -1,9 +1,9 @@
 version: "3.2"
 services:
-  maltrail:
+  jtan-sensor-maltrail:
     privileged: true
-    image: index.docker.io/dnsc/jtan-maltrail
-    container_name: maltrail
+    image: index.docker.io/dnsc/jtan-sensor-maltrail
+    container_name: jtan-sensor-maltrail
     hostname: "$SENSOR_LOCATION"
     volumes:
       - logs:/logs
@@ -21,9 +21,9 @@ services:
     env_file:
       - .env
 
-  maltrail-web:
-    image: index.docker.io/dnsc/jtan-maltrail-web
-    container_name: maltrail-web
+  jtan-sensor-maltrail-web:
+    image: index.docker.io/dnsc/jtan-sensor-maltrail-web
+    container_name: jtan-sensor-maltrail-web
     volumes:
       - logs:/logs
     logging:
@@ -40,9 +40,9 @@ services:
     env_file:
       - .env
 
-  filebeat:
-    image: index.docker.io/dnsc/jtan-filebeat
-    container_name: filebeat
+  jtan-sensor-filebeat:
+    image: index.docker.io/dnsc/jtan-sensor-filebeat
+    container_name: jtan-sensor-filebeat
     logging:
       driver: "json-file"
       options:
@@ -55,9 +55,9 @@ services:
     env_file:
       - .env
   
-  redis:
-    image: "redis:6.2-alpine"
-    container_name: redis
+  jtan-sensor-redis:
+    image: redis:6.2-alpine
+    container_name: jtan-sensor-redis
     logging:
       driver: "json-file"
       options:
@@ -69,9 +69,9 @@ services:
     command: redis-server
     network_mode: host
 
-  exporter:
-    image: index.docker.io/dnsc/jtan-exporter
-    container_name: exporter
+  jtan-sensor-exporter:
+    image: index.docker.io/dnsc/jtan-sensor-exporter
+    container_name: jtan-sensor-exporter
     volumes:
       - ${CERTIFICATE}:/home/certs/cert.pem
     logging:
@@ -84,9 +84,23 @@ services:
     env_file:
       - .env
 
-  watchtower:
+  jtan-sensor-log-rotate:
+    image: index.docker.io/dnsc/jtan-sensor-log-rotate
+    container_name: jtan-sensor-log-rotate
+    volumes:
+      - logs:/logs
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "5"
+        max-size: 10m
+    restart: always
+    env_file:
+      - .env
+
+  jtan-sensor-watchtower:
     image: containrrr/watchtower
-    container_name: watchtower
+    container_name: jtan-sensor-watchtower
     logging:
       driver: "json-file"
       options:

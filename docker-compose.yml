@@ -14,7 +14,7 @@ services:
         max-size: 10m
     restart: always
     depends_on:
-      - filebeat
+      - jtan-sensor-filebeat
     network_mode: host
     environment:
       - TZ=UTC
@@ -33,7 +33,7 @@ services:
         max-size: 10m
     restart: always
     depends_on:
-      - maltrail
+      - jtan-sensor-maltrail
     network_mode: host
     environment:
       - TZ=UTC
@@ -65,7 +65,7 @@ services:
         max-size: 10m
     restart: always
     depends_on:
-      - filebeat
+      - jtan-sensor-filebeat
     command: redis-server
     network_mode: host
 
@@ -109,7 +109,6 @@ services:
     restart: always
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - ~/.docker/config.json:/config.json
     command: --interval 3600
     environment:
       - WATCHTOWER_CLEANUP=true
